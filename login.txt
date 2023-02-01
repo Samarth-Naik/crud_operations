@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Login Page</title>
+    </head>
+    <body>
+
+    <form method="post">
+        <label>Username</label>
+        <input type="text" name="username" required>
+        <label>Password</label>
+        <input type="text" name="pass">
+        <input type="submit" name="submit" required>
+        </form>
+    </body>
+</html>
+<?php
+$conn=mysqli_connect("localhost","root","","crudddd");
+
+if(isset($_POST["submit"]))
+{
+    $uname=$_POST["username"];
+    $passs=$_POST["pass"];
+
+    $sql=mysqli_query($conn,"select count(*) as total from details where username='".$uname."'and password='".$passs."' ")or die(mysqli_error($conn));
+    
+
+    $rw=mysqli_fetch_array($sql);
+
+    if($rw['total'] >0)
+    {
+        echo"<script>alert('username and password are correct')</script>";
+        header("location:index.php");
+    }
+    else{
+        echo"<script>alert('username and password are inncorrect')</script>";
+    }
+
+}
+
+
+?>

@@ -1,0 +1,133 @@
+<?php
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="crudddd";
+
+$link=mysqli_connect($servername,$username,$password,$dbname);
+$con=mysqli_select_db($link,$dbname);
+
+if($con)
+{
+    echo "connection successfull";
+}
+else
+{
+    die("connection failed".mysqli_connect_error());
+}
+?>
+<html>
+    <head><link rel="stylesheet" href="style.css"></head>
+    <body>
+        <form action="" method="post">
+            <table>
+                <tr>
+                    <td>Enter name</td>
+                    <td><input type="text" name="username"></td>
+                </tr>
+                <tr>
+                    <td>Enter city</td>
+                    <td><input type="text" name="city"></td>
+                </tr>
+                <tr>
+                    <td>Enter email</td>
+                    <td><input type="text" name="email"></td>
+                </tr>
+                <tr >
+                    <td colspan="2" align="center">
+                    <input type="submit" name="submit1" value="insert">
+                    <input type="submit" name="submit2" value="delete">
+                    <input type="submit" name="submit3" value="update">
+                    <input type="submit" name="submit4" value="display">
+                    <input type="submit" name="submit5" value="search">
+                    <input type="submit" name="submit6" value="searchAA">
+                    </td> 
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
+<?php
+ 
+ if(isset($_POST["submit1"]))
+ {
+    mysqli_query($link,"insert into table1 values('','$_POST[username]','$_POST[city]','$_POST[email]')");
+    echo "record inserted";
+ }
+ if(isset($_POST["submit2"]))
+ {
+    mysqli_query($link,"delete from table1 where username='$_POST[username]'");
+    echo "record deleted";
+ }
+ if(isset($_POST["submit3"]))
+ {
+    mysqli_query($link,"update table1 set city='$_POST[city]' where username='$_POST[username]'");
+    echo "record updated";
+ }
+ if(isset($_POST["submit4"]))
+ {
+   $res=mysqli_query($link,"select * from table1");
+   echo"<table border=1>";
+   echo"<tr>";
+   echo"<td>";echo"id";echo"</td>";
+   echo"<td>";echo"name";echo"</td>";
+   echo"<td>";echo"city";echo"</td>";
+   echo"<td>";echo"email";echo"</td>";
+   echo"</tr>";
+
+   while($rw=mysqli_fetch_array($res))
+   {
+    echo"<tr>";
+    echo"<td>";echo"$rw[id]";echo"</td>";
+    echo"<td>";echo"$rw[username]";echo"</td>";
+    echo"<td>";echo"$rw[city]";echo"</td>";
+    echo"<td>";echo"$rw[email]";echo"</td>";
+    echo"</tr>";
+   }
+   echo"</table>";
+}
+if(isset($_POST["submit5"]))
+{
+  $res=mysqli_query($link,"select * from table1 where city='$_POST[city]'");
+  echo"<table border=1>";
+  echo"<tr>";
+  echo"<td>";echo"id";echo"</td>";
+  echo"<td>";echo"name";echo"</td>";
+  echo"<td>";echo"city";echo"</td>";
+  echo"<td>";echo"email";echo"</td>";
+  echo"</tr>";
+
+  while($rw=mysqli_fetch_array($res))
+  {
+   echo"<tr>";
+   echo"<td>";echo"$rw[id]";echo"</td>";
+   echo"<td>";echo"$rw[username]";echo"</td>";
+   echo"<td>";echo"$rw[city]";echo"</td>";
+   echo"<td>";echo"$rw[email]";echo"</td>";
+   echo"</tr>";
+  }
+  echo"</table>";
+}
+if(isset($_POST["submit6"]))
+{
+  $res=mysqli_query($link,"select username,age from table1 natural join table2 where username='$_POST[username]'");
+  echo"<table border=1>";
+  echo"<tr>";
+ // echo"<td>";echo"id";echo"</td>";
+  echo"<td>";echo"name";echo"</td>";
+  echo"<td>";echo"age";echo"</td>";
+//  echo"<td>";echo"email";echo"</td>";
+  echo"</tr>";
+
+  while($rw=mysqli_fetch_array($res))
+  {
+   echo"<tr>";
+  // echo"<td>";echo"$rw[id]";echo"</td>";
+   echo"<td>";echo"$rw[username]";echo"</td>";
+   echo"<td>";echo"$rw[age]";echo"</td>";
+  // echo"<td>";echo"$rw[email]";echo"</td>";
+   echo"</tr>";
+  }
+  echo"</table>";
+}
+?>
